@@ -51,4 +51,65 @@ export default tseslint.config({
     ...reactDom.configs.recommended.rules,
   },
 })
+
+
+# 🧠 Brainly
+
+**Second Brain** is a personal productivity web application that lets you save and manage important links from **YouTube** and **Twitter**, acting as your digital memory vault. It’s designed for fast access, minimal distractions, and modern UI — built with a full-stack TypeScript ecosystem.
+
+---
+
+## 🚀 Features
+
+- 📌 Save important links from YouTube and Twitter  
+- 🗃️ Categorized storage for quick access  
+- 🔐 Authentication using JWT  
+- 🔎 Clean, responsive UI built with Tailwind CSS  
+- 🧠 Designed as your personal "second brain" to never lose useful content again  
+
+---
+
+## 🛠️ Tech Stack
+
+### 🧩 Frontend
+- [React](https://reactjs.org/) (with Hooks)
+- [Tailwind CSS](https://tailwindcss.com/)  
+- [Axios](https://axios-http.com/) for API requests
+- [Vite](https://vitejs.dev/) (optional, if used for fast dev)
+
+### 🔧 Backend
+- [Node.js](https://nodejs.org/)
+- [Express.js](https://expressjs.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [MongoDB](https://www.mongodb.com/) (with Mongoose)
+- [JWT](https://jwt.io/) for authentication
+
+---
+
+## 📦 Installation
+
+### 🖥 Backend Setup
+
+```bash
+npm install
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```
