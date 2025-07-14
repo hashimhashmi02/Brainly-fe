@@ -1,17 +1,18 @@
 import React from 'react';
 
-interface InputProps {
-  reference: React.RefObject<HTMLInputElement>;
-  placeholder: string;
-  type?: string;
+export interface InputProps
+  // grab all the normal <input> attributes except "ref"
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'ref'> {
+  /** the ref to the actual <input> element */
+  reference: React.Ref<HTMLInputElement>;
+  /** optional label above the input */
   label?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
   reference,
-  placeholder,
-  type = "text",
-  label
+  label,
+  ...inputProps
 }) => {
   return (
     <div className="mb-4">
@@ -22,9 +23,11 @@ export const Input: React.FC<InputProps> = ({
       )}
       <input
         ref={reference}
-        type={type}
-        placeholder={placeholder}
-        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all duration-200 bg-gray-50 focus:bg-white"
+        {...inputProps}
+        className="w-full px-4 py-3 border border-gray-300 rounded-xl
+                   focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+                   outline-none transition-all duration-200
+                   bg-gray-50 focus:bg-white"
       />
     </div>
   );

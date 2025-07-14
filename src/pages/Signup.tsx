@@ -83,7 +83,7 @@ export function Signup() {
                     <div className="text-center mb-8">
                         <div className="flex items-center justify-center space-x-2 mb-4">
                             <Logo className="h-8 w-8 text-indigo-600" />
-                            <span className="text-2xl font-bold text-gray-900">brainly</span>
+                            <span className="text-2xl font-bold text-gray-900">Brainly</span>
                         </div>
                         
                         <div className="inline-flex items-center space-x-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium mb-4">

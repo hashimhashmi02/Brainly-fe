@@ -1,8 +1,8 @@
-// src/pages/Signin.tsx
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {Logo} from "../icons/Logo";       
+
+import { Logo } from "../icons/Logo";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { BACKEND_URL } from "../config";
 import { Button } from "../components/Button";
@@ -17,7 +17,6 @@ export function Signin() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const username = usernameRef.current?.value.trim();
     const password = passwordRef.current?.value;
 
@@ -28,7 +27,6 @@ export function Signin() {
 
     setLoading(true);
     setError("");
-
     try {
       const { data } = await axios.post(
         `${BACKEND_URL}/api/v1/signin`,
@@ -51,14 +49,14 @@ export function Signin() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4">
-      {/* Background decoration */}
+  
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"/>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"/>
       </div>
 
       <div className="relative z-10 w-full max-w-md">
-        {/* Back to home */}
+       
         <button
           onClick={() => navigate("/")}
           className="flex items-center text-gray-600 hover:text-indigo-600 mb-8 transition-colors duration-200"
@@ -67,20 +65,18 @@ export function Signin() {
           Back to home
         </button>
 
-        {/* Sign-in card */}
+     
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-200 p-8 shadow-xl">
-          {/* Header */}
+        
           <div className="text-center mb-8">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <Logo className="h-8 w-8 text-indigo-600" />
-              <span className="text-2xl font-bold text-gray-900">brainly</span>
+              <span className="text-2xl font-bold text-gray-900">Brainly </span>
             </div>
-
-            <div className="inline-flex items-center space-x-2 bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-medium mb-4">
+            <div className="inline-flex items-center space-x-2 bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm mb-4">
               <Sparkles className="h-3 w-3" />
               <span>Welcome back, genius</span>
             </div>
-
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
               Ready to dive back in?
             </h1>
@@ -90,12 +86,12 @@ export function Signin() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
-              ref={usernameRef}
+              reference={usernameRef}
               label="Username"
               placeholder="Your brilliant username"
             />
             <Input
-              ref={passwordRef}
+              reference={passwordRef}
               type="password"
               label="Password"
               placeholder="Super secret password"
@@ -109,7 +105,6 @@ export function Signin() {
 
             <Button
               type="submit"
-              onClick={() => {}}
               loading={loading}
               variant="primary"
               text={loading ? "Signing you in..." : "Let's go!"}

@@ -16,7 +16,7 @@ export default function Landing() {
           <nav className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Logo className="h-8 w-8 text-indigo-600" />
-              <span className="text-2xl font-bold text-gray-900">brainly</span>
+              <span className="text-2xl font-bold text-gray-900">Brainly</span>
             </div>
             <button
               onClick={() => navigate('/signup')}

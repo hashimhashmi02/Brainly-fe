@@ -1,77 +1,105 @@
+
 import { useRef, useState } from "react";
 import { CrossIcon } from "../icons/CrossIcons";
 import { Button } from "./Button";
 import { Input } from "./Input";
-import { BACKEND_URL } from "../config";
 import axios from "axios";
+import { BACKEND_URL } from "../config";
 
+type ContentType = "youtube" | "twitter";
 
-enum ContentType {
-    Youtube = "youtube",
-    Twitter = "twitter"
+interface CreateContentModalProps {
+  open: boolean;
+  onClose: () => void;
 }
 
-// controlled component
-export function CreateContentModal({open, onClose}) {
-    const titleRef = useRef<HTMLInputElement>(null);
-    const linkRef = useRef<HTMLInputElement>(null);
-    const [type, setType] = useState(ContentType.Youtube);
+export function CreateContentModal({
+  open,
+  onClose,
+}: CreateContentModalProps) {
+  const titleRef = useRef<HTMLInputElement>(null);
+  const linkRef  = useRef<HTMLInputElement>(null);
+  const [type, setType] = useState<ContentType>("youtube");
 
-    async function addContent() {
-        const title = titleRef.current?.value;
-        const link = linkRef.current?.value;
-
-        await axios.post(`${BACKEND_URL}/api/v1/content`, {
-            link,
-            title,
-            type
-        }, {
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        })
-
-        onClose();
-
+  const addContent = async () => {
+    const title = titleRef.current?.value ?? "";
+    const link  = linkRef.current?.value  ?? "";
+    try {
+      await axios.post(
+        `${BACKEND_URL}/api/v1/content`,
+        { title, link, type },
+        { headers: { Authorization: localStorage.getItem("token") ?? "" } }
+      );
+      onClose();
+    } catch (err) {
+      console.error("Failed to add content:", err);
     }
+  };
 
-    return <div>
-        {open && <div> 
-            <div className="w-screen h-screen bg-slate-500 fixed top-0 left-0 
-            opacity-60 flex justify-center">
-               
+  if (!open) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+   
+      <div
+        className="absolute inset-0 bg-slate-500 opacity-60"
+        onClick={onClose}
+      />
+
+     
+      <div className="relative bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
+        
+        <div className="flex justify-end">
+          <button onClick={onClose} className="p-1">
+            <CrossIcon />
+          </button>
+        </div>
+
+        <div className="space-y-4">
+        
+          <Input
+            reference={titleRef}
+            label="Title"
+            placeholder="Enter title"
+          />
+          <Input
+            reference={linkRef}
+            label="Link"
+            placeholder="Enter link"
+          />
+
+       
+          <div>
+            <h2 className="font-medium mb-2">Type</h2>
+            <div className="flex gap-2">
+              <Button
+                text="YouTube"
+                variant={type === "youtube" ? "primary" : "secondary"}
+                onClick={() => setType("youtube")}
+              />
+              <Button
+                text="Twitter"
+                variant={type === "twitter" ? "primary" : "secondary"}
+                onClick={() => setType("twitter")}
+              />
             </div>
-            <div className="w-screen h-screen fixed top-0 left-0 flex justify-center">
-                <div className="flex flex-col justify-center">
-                    <span className="bg-white opacity-100 p-4 rounded fixed">
-                        <div className="flex justify-end">
-                            <div onClick={onClose} className="cursor-pointer">
-                                <CrossIcon />
-                            </div>
-                        </div>
-                        <div>
-                            <Input reference={titleRef} placeholder={"Title"} />
-                            <Input reference={linkRef} placeholder={"Link"} />
-                        </div>
-                        <div>
-                            <h1>Type</h1>
-                            <div className="flex gap-1 justify-center pb-2">
-                                <Button text="Youtube" variant={type === ContentType.Youtube ? "primary" : "secondary"} onClick={() => {
-                                    setType(ContentType.Youtube)
-                                }}></Button>
-                                <Button text="Twitter" variant={type === ContentType.Twitter ? "primary" : "secondary"} onClick={() => {
-                                    setType(ContentType.Twitter)
-                                }}></Button>
-                            </div>
-                        </div>
-                        <div className="flex justify-center">
-                            <Button onClick={addContent} variant="primary" text="Submit" />
-                        </div>
-                    </span>
-                </div>     
-            </div>
-            
-        </div>}
+          </div>
+
+          
+          <div className="text-center">
+            <Button
+              text="Submit"
+              variant="primary"
+              onClick={addContent}
+            />
+          </div>
+        </div>
+      </div>
     </div>
-
+  );
 }
+
+
+
+
+
