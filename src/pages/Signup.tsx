@@ -38,9 +38,14 @@ export function Signup() {
             });
             
             const jwt = response.data.token;
-            localStorage.setItem("token", jwt);
+
+            // ✅ Save token with Bearer prefix so backend middleware accepts it
+            localStorage.setItem("token", `Bearer ${jwt}`);
+            console.log("✅ Signup token saved:", `Bearer ${jwt}`);
+
             navigate("/dashboard");
         } catch (err: any) {
+            console.error("❌ Signup error:", err);
             if (err.response?.status === 409) {
                 setError("Username taken! Someone beat you to it. Try being more creative 🎨");
             } else if (err.response?.status === 400) {
@@ -61,14 +66,13 @@ export function Signup() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center p-4">
-            {/* Background decoration */}
+            {/* ✅ UI untouched */}
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
                 <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
             </div>
 
             <div className="relative w-full max-w-md">
-                {/* Back to home button */}
                 <button 
                     onClick={() => navigate('/')}
                     className="flex items-center text-gray-600 hover:text-indigo-600 mb-8 transition-colors duration-200"
@@ -77,9 +81,7 @@ export function Signup() {
                     Back to home
                 </button>
 
-                {/* Main signup card */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-3xl border border-gray-200 p-8 shadow-xl">
-                    {/* Header */}
                     <div className="text-center mb-8">
                         <div className="flex items-center justify-center space-x-2 mb-4">
                             <Logo className="h-8 w-8 text-indigo-600" />
@@ -99,7 +101,6 @@ export function Signup() {
                         </p>
                     </div>
 
-                    {/* Form */}
                     <div onKeyPress={handleKeyPress}>
                         <Input 
                             reference={usernameRef} 
@@ -129,7 +130,6 @@ export function Signup() {
                         />
                     </div>
 
-                    {/* Footer */}
                     <div className="text-center mt-6 pt-6 border-t border-gray-200">
                         <p className="text-gray-600 text-sm">
                             Already have an account?{' '}
@@ -143,7 +143,6 @@ export function Signup() {
                     </div>
                 </div>
 
-                {/* Bottom text */}
                 <p className="text-center text-gray-500 text-sm mt-6">
                     Your future self will thank you for this decision 🚀
                 </p>

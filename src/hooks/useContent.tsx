@@ -3,29 +3,37 @@ import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
 
 export function useContent() {
-    const [contents, setContents] = useState([]);
+  const [contents, setContents] = useState([]);
 
-    function refresh() {
-        axios.get(`${BACKEND_URL}/api/v1/content`, {
-            headers: {
-                "Authorization": localStorage.getItem("token")
-            }
-        })
-            .then((response) => {
-                setContents(response.data.content)
-            })
-    }
+  function refresh() {
+    const token = localStorage.getItem("token");
+    console.log("📌 Fetching content with token:", token);
 
-    useEffect(() => {
-        refresh()
-        let interval = setInterval(() => {
-            refresh()
-        }, 10 * 1000)
+    axios
+      .get(`${BACKEND_URL}/api/v1/content`, {
+        headers: {
+          Authorization: token || "",
+        },
+      })
+      .then((response) => {
+        console.log("✅ Content fetched:", response.data.content);
+        setContents(response.data.content);
+      })
+      .catch((err) => {
+        console.error("❌ Failed to fetch content:", err);
+      });
+  }
 
-        return () => {
-            clearInterval(interval);
-        }
-    }, [])
+  useEffect(() => {
+    refresh();
+    const interval = setInterval(() => {
+      refresh();
+    }, 10 * 1000);
 
-    return {contents, refresh};
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  return { contents, refresh };
 }
