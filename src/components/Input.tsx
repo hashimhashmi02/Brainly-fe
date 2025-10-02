@@ -1,11 +1,11 @@
 import React from 'react';
 
 export interface InputProps
-  // grab all the normal <input> attributes except "ref"
+
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'ref'> {
-  /** the ref to the actual <input> element */
+  
   reference: React.Ref<HTMLInputElement>;
-  /** optional label above the input */
+
   label?: string;
 }
 
